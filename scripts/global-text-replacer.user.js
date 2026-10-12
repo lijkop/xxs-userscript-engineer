@@ -6,10 +6,10 @@
 // @description  按自定义规则在全网页面替换文本内容，适配 React/Vue 与虚拟列表，支持首次加载、动态变更与定时兜底。
 // @description:en Replace text on any site with custom rules; works with React/Vue and virtual lists, covering first load, dynamic updates and periodic sweeps.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
-// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/global-text-replacer.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/global-text-replacer.user.js
+// @homepage     https://github.com/lijkop/xxs-userscript-engineer
+// @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/global-text-replacer.user.js
+// @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/global-text-replacer.user.js
 // @match        *://*/*
 // @grant        GM_getValue
 // @grant        GM_setValue

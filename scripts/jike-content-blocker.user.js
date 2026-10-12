@@ -6,10 +6,10 @@
 // @description  按关键词屏蔽即刻时间线内容，支持已读隐藏与去重处理。
 // @description:en Block Jike timeline posts by keyword, with read-hiding and deduplication.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
-// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/jike-content-blocker.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/jike-content-blocker.user.js
+// @homepage     https://github.com/lijkop/xxs-userscript-engineer
+// @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/jike-content-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/jike-content-blocker.user.js
 // @match        https://web.okjike.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue

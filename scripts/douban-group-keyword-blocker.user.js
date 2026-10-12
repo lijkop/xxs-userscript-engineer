@@ -6,10 +6,10 @@
 // @description  屏蔽豆瓣小组中标签或标题命中关键词的帖子。
 // @description:en Hide Douban group topics whose tags or titles match your keywords.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
-// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
+// @homepage     https://github.com/lijkop/xxs-userscript-engineer
+// @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
 // @match        https://www.douban.com/group/*
 // @grant        GM_getValue
 // @grant        GM_setValue

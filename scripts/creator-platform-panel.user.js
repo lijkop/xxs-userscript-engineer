@@ -6,10 +6,10 @@
 // @description  为跨平台创作者提供常驻导航面板，支持边缘吸附、平台与标签筛选、备注、数据导入导出。
 // @description:en A persistent navigation panel for cross-platform creators: edge docking, platform/tag filtering, notes, data import/export.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
-// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/creator-platform-panel.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/creator-platform-panel.user.js
+// @homepage     https://github.com/lijkop/xxs-userscript-engineer
+// @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/creator-platform-panel.user.js
+// @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/creator-platform-panel.user.js
 // @match        *://*/*
 // @grant        GM_getValue
 // @grant        GM_setValue

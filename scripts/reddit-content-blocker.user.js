@@ -6,10 +6,10 @@
 // @description  按关键词与用户名屏蔽 Reddit 帖子、评论和用户，支持规则导入导出与可视化面板。
 // @description:en Block Reddit posts, comments and users by keyword or username, with rule import/export and a control panel.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
-// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
+// @homepage     https://github.com/lijkop/xxs-userscript-engineer
+// @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
 // @match        https://www.reddit.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
