@@ -6,10 +6,10 @@
 // @description  悬浮球触发，一键提取小红书笔记评论并复制到剪贴板，支持自动滚动加载。
 // @description:en A floating ball that extracts Xiaohongshu note comments to the clipboard, with auto-scroll loading.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/xhs-comment-copier.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/xhs-comment-copier.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/xhs-comment-copier.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/xhs-comment-copier.user.js
 // @match        https://www.xiaohongshu.com/explore/*
 // @match        https://www.xiaohongshu.com/search_result/*
 // @grant        GM_addStyle

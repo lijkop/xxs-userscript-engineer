@@ -6,10 +6,10 @@
 // @description  按关键词、用户名与互动数（如零评论）隐藏 X/Twitter 上的推文与回复，隐藏后不残留空白。
 // @description:en Hide tweets and replies on X/Twitter by keyword, username and engagement (e.g. zero comments), leaving no blank gaps.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/twitter-content-blocker.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/twitter-content-blocker.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/twitter-content-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/twitter-content-blocker.user.js
 // @match        *://twitter.com/*
 // @match        *://x.com/*
 // @grant        GM_getValue

@@ -6,10 +6,10 @@
 // @description  批量在多个搜索引擎同时打开当前关键词，支持引擎分组、快捷键录制、油猴菜单、悬浮按钮、拖拽排序与配置导入导出。
 // @description:en Open the current query across multiple search engines at once: engine groups, hotkey recording, menu commands, floating button, drag sorting, import/export.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/multi-engine-search.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/multi-engine-search.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/multi-engine-search.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/multi-engine-search.user.js
 // @match        *://*/*
 // @grant        GM_getValue
 // @grant        GM_setValue

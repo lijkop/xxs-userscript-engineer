@@ -6,10 +6,10 @@
 // @description  自动点击小黑盒页面上的“取消”按钮，关闭干扰弹窗。
 // @description:en Automatically clicks the "Cancel" button in popups on Xiaoheihe (HeyBox) pages.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/heybox-popup-dismiss.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/heybox-popup-dismiss.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/heybox-popup-dismiss.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/heybox-popup-dismiss.user.js
 // @match        https://www.xiaoheihe.cn/*
 // @grant        none
 // ==/UserScript==

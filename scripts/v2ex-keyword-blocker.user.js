@@ -6,10 +6,10 @@
 // @description  自定义三组关键词，隐藏 V2EX 中包含关键词的帖子标题、正文或评论。
 // @description:en Manage three keyword groups to hide V2EX topics and comments that contain them.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/v2ex-keyword-blocker.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/v2ex-keyword-blocker.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/v2ex-keyword-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/v2ex-keyword-blocker.user.js
 // @match        https://www.v2ex.com/*
 // @match        https://v2ex.com/*
 // @grant        GM_getValue

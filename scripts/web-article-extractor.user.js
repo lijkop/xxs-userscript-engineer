@@ -6,10 +6,10 @@
 // @description  快捷键提取并清洗网页正文（保留链接文字、去除链接 URL）到剪贴板，带可视化快捷键设置面板。
 // @description:en Hotkey to extract and clean page article text (keeps link text, drops URLs) to the clipboard, with a hotkey settings panel.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/XXS-pickle/userscripts
-// @supportURL   https://github.com/XXS-pickle/userscripts/issues
-// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/web-article-extractor.user.js
-// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/web-article-extractor.user.js
+// @homepage     https://github.com/XXS-pickle/xxs-userscript-engineer
+// @supportURL   https://github.com/XXS-pickle/xxs-userscript-engineer/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/web-article-extractor.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/web-article-extractor.user.js
 // @match        *://*/*
 // @grant        GM_getValue
 // @grant        GM_setValue

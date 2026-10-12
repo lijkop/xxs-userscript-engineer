@@ -7,8 +7,8 @@
 ## 一、发布前必须先做的 4 件事
 
 1. **地址已写入，无需再改**
-   18 个脚本的 `@homepage`、`@supportURL`、`@updateURL`、`@downloadURL` 已全部指向 `https://github.com/XXS-pickle/userscripts`；**`@namespace` 保持原值不动**（保护已安装的老用户）。
-   剩下要做的只有两件事：在 GitHub 建好名为 `userscripts` 的 **Public** 空仓库（不要勾选 README / .gitignore），然后推送本地首次提交。
+   18 个脚本的 `@homepage`、`@supportURL`、`@updateURL`、`@downloadURL` 已全部指向 `https://github.com/XXS-pickle/xxs-userscript-engineer`；**`@namespace` 保持原值不动**（保护已安装的老用户）。
+   剩下要做的只有两件事：在 GitHub 建好名为 `xxs-userscript-engineer` 的 **Public** 空仓库（不要勾选 README / .gitignore），然后推送本地首次提交。
 2. **确认老用户的更新路径**
    本次只改了脚本**显示名**与描述，`@namespace` 未变。从 Greasy Fork 更新时，Tampermonkey 按下载地址匹配，本地规则保留；建议先在一台测试机验证一次“旧版 → 新版”的更新，确认没有产生重复条目，再发给用户。
 3. **浏览器实测**（当前**未做**任何实测）
@@ -65,7 +65,7 @@
 ## 六、GitHub 仓库结构（一个仓库管多个脚本）
 
 ```text
-userscripts/
+xxs-userscript-engineer/
 ├─ scripts/                       # 对外发布目录，Greasy Fork 从这里同步
 │  ├─ heybox-popup-dismiss.user.js
 │  └─ ... （每脚本独立 @version）
@@ -93,7 +93,7 @@ https://raw.githubusercontent.com/{USER}/{REPO}/main/scripts/{SLUG}.user.js
 示例：
 
 ```text
-https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/weibo-content-blocker.user.js
+https://raw.githubusercontent.com/XXS-pickle/xxs-userscript-engineer/main/scripts/weibo-content-blocker.user.js
 ```
 
 国内访问更快的 CDN 备选（内容相同，缓存最长 24 小时）：
