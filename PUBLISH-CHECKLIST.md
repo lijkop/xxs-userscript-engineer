@@ -127,47 +127,54 @@ https://cdn.jsdelivr.net/gh/{USER}/{REPO}@main/scripts/{SLUG}.user.js
 - **Webhook**：push 后立刻触发（推荐，见下节）；
 - **前提**：`@version` 必须比线上版本大，否则不会生成新版本。
 
-## 九、用 GitHub Webhook 触发 Greasy Fork 更新
+## 九、GitHub Webhook（推荐，配一次全部生效）
 
-1. Greasy Fork 脚本页面 → 管理 → 同步设置里会给出**该脚本专用的 Webhook URL**（形如 `https://greasyfork.org/scripts/<id>/sync` 带 token 参数）；
-2. GitHub 仓库 → Settings → Webhooks → Add webhook：
-   - Payload URL：Greasy Fork 给的 URL
-   - Content type：`application/x-www-form-urlencoded`
-   - Which events：**Just the push event**
-   - 勾选 Active
-3. 每个脚本一个 Webhook（因为 URL 按脚本 ID 区分）；
-4. push 到 `main` 后，GitHub 会请求该 URL，Greasy Fork 拉取源码并比对 `@version`。
+Greasy Fork 提供的是**账号级** Webhook——**整个仓库只配一个**，不需要每个脚本配一遍。
 
-**等价替代**（不想配 18 个 Webhook 时）：用 GitHub Actions 在 push 时统一 curl 所有同步 URL。
+Payload URL（来自 Greasy Fork 账号设置页）：
 
-```yaml
-# .github/workflows/sync-greasyfork.yml
-name: Sync to GreasyFork
-on:
-  push:
-    branches: [main]
-    paths: ['scripts/**']
-jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger GreasyFork sync
-        run: |
-          for url in "${{ secrets.GF_SYNC_URLS }}"; do
-            curl -sS -X POST "$url" || echo "sync failed: $url"
-          done
+```text
+https://api.greasyfork.org/zh-CN/users/995681-xxs-zyfx/webhook
 ```
 
-把 18 个同步 URL 以空格分隔存到仓库 Secret `GF_SYNC_URLS`，避免把 token 写进公开仓库。
+配置步骤：
 
-## 十、发布顺序建议
+1. GitHub 仓库 → **Settings** → **Webhooks** → **Add webhook**
+2. **Payload URL**：填上面的地址
+3. **Content type**：`application/json`
+4. **Secret**：留空
+5. 事件：选 **Just the push event**（若只想在发版时更新，选 Let me select individual events，勾掉 Pushes、勾上 Releases）
+6. **Active** 打勾 → Add webhook
 
-1. 确定 GitHub 用户名 → 全局替换占位名 → 建仓库 → 首次 push；
-2. 本地装一遍 `scripts/` 下的新脚本，逐个实测；
-3. 确认 2 个版权待定脚本；
-4. Greasy Fork 上逐脚本创建页面（先发 3~5 个简单的走通流程）；
-5. 配 Webhook，验证 push 后自动同步；
-6. 一次性配置好说明页、分类与截图，再批量发布剩余脚本。
+工作原理：push 时 GitHub 通知 Greasy Fork，GF 读取该事件中**被修改的文件**，对照已在 GF 上设置了「外部源码同步」的脚本，拉取更新。仍然要求 `@version` 变大才会生成新版本。
+
+注意事项：
+
+- 触发过一次之后，GF 脚本页面的同步类型才会从「自动 / 手动」变成 Webhook 同步。
+- 只有 push 事件里**包含该脚本文件**时才会同步对应脚本。
+- 前置条件：脚本已在 GF 上设为「从外部源码同步」。
+- 该地址请以 Greasy Fork 用户设置页显示为准。
+
+### 备用方案：GitHub Actions（可选）
+
+仓库里已带 `.github/workflows/sync-greasyfork.yml`：push 时自动校验脚本元数据（缺 `@name`/`@version`/`@description`/`@match` 会报错）。若再配置仓库 Secret `GF_SYNC_URLS`（多个同步地址用空格分隔），它还能兜底触发同步。有了账号级 Webhook 之后，这一步不是必需的。
+
+## 十、当前进度与后续顺序
+
+已完成：
+
+1. ✅ 仓库建立并推送：`lijkop/xxs-userscript-engineer`
+2. ✅ 版权确认：18 个脚本均为本人原创（`kun`、`zhuf` 为本人化名）
+3. ✅ 更新链路实测通过：GitHub → Tampermonkey（多引擎批量搜索 `2.1.0` → `2.1.1`）
+4. ✅ Greasy Fork 已设置外部源码同步 4 个：多引擎批量搜索、小黑盒内容净化器、小黑盒弹窗自动关闭、X (Twitter) 内容屏蔽器
+5. ✅ 2026-10-13 修正 7 个脚本的域名匹配问题（见第十一节）
+
+待办：
+
+1. 配置仓库级 Webhook（第九节，配一次全部生效）
+2. Greasy Fork 上创建剩余 14 个脚本页面（用 `GREASYFORK-SUBMIT-SHEET.md`）
+3. 浏览器实测 18 个脚本，重点：多引擎批量搜索、Linux.do 内容过滤器、微博内容屏蔽器、小红书关键词屏蔽器；小黑盒两个脚本还需确认真实页面类名（见 `TROUBLESHOOTING.md`）
+4. 决定是否统一 `@license MIT` 并添加 `LICENSE` 文件
 
 ---
 
@@ -183,8 +190,30 @@ jobs:
 | `@version` | 统一为三段式（1.0 → 1.0.0、3.2 → 3.2.0 等），只补零不倒退 |
 | `@homepage` / `@supportURL` | 全部新增（仓库地址 / Issues 地址） |
 | `@icon` | 删除 3 处引用站点 favicon 的图标 |
-| `@match` | 智能正文助手的两条 http/https 合并为 `*://*/*`；其余保持实际需要的站点 |
+| `@match` | 智能正文助手的两条 http/https 合并为 `*://*/*`；2026-10-13 修正 7 处域名覆盖问题（见第十一节） |
 | `@grant` | 与代码实际调用一一核对，无多余权限，未删除任何所需权限（已修正多引擎搜索的重复项） |
-| `@license` | 仅保留原本已声明 MIT 的 5 个，其余不擅自添加 |
-| `@updateURL` / `@downloadURL` | 按约定不写入源码版本 |
+| `@license` | 仅保留原本已声明 MIT 的 5 个，其余待统一决定 |
+| `@updateURL` / `@downloadURL` | 指向 GitHub raw，让 Tampermonkey 直接向仓库检查更新 |
 | 代码主体 | **一字未改**（自动替换元数据块，行数差异仅来自元数据块变化） |
+
+---
+
+## 十一、域名覆盖修正记录（2026-10-13）
+
+起因：小黑盒脚本"完全不工作"，排查发现 `xiaoheihe.cn` 与 `www.xiaoheihe.cn` 是两个独立解析的域名（实测都不跳转、都返回 200），而脚本只匹配了 `www` 版本 → 脚本从未注入。
+
+据此对全部 18 个脚本做了同类排查，修正 7 处：
+
+| 脚本 | 修正前 | 修正后 | 版本 |
+|---|---|---|---|
+| 小黑盒弹窗自动关闭 | `https://www.xiaoheihe.cn/*` | `https://*.xiaoheihe.cn/*` | 1.0.1 |
+| 小黑盒内容净化器 | `https://www.xiaoheihe.cn/app/bbs/*` | `https://*.xiaoheihe.cn/app/bbs/*` | 4.1.1 |
+| Reddit 内容屏蔽器 | 仅 `www.reddit.com` | 增加 `https://reddit.com/*` | 1.0.1 |
+| X (Twitter) 内容屏蔽器 | `twitter.com` / `x.com` | `*://*.twitter.com/*` / `*://*.x.com/*` | 2.1.1 |
+| 豆瓣小组关键词屏蔽器 | 仅 `www.douban.com` | 增加 `https://douban.com/group/*` | 1.0.1 |
+| 知乎回答剪藏 | 仅 `www.zhihu.com/question/*` | `*://*.zhihu.com/question/*` | 1.6.1 |
+| 小红书评论批量复制 | 仅 `www.xiaohongshu.com/...` | `*://*.xiaohongshu.com/...` | 1.1.1 |
+
+不需要改动的：Linux.do（原本就带 `https://*.linux.do/*`）、V2EX（两条都写了）、微博（`https://*.weibo.com/*`）、小红书关键词屏蔽器（`*://*.xiaohongshu.com/*`）、即刻两个、知乎自动展开（`*://*.zhihu.com/...`）、以及 4 个全站脚本（`*://*/*`）。
+
+⚠️ 尚未验证的部分：小黑盒页面是 JS 渲染的 SPA，静态抓取拿不到类名，脚本内的选择器（`a.hb-cpt__bbs-content` 等）**未经真机验证**。若修完域名后仍不生效，请按 `TROUBLESHOOTING.md` 第二节跑诊断代码，把实际类名发我。

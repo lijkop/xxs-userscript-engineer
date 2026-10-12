@@ -1,6 +1,6 @@
 # 小小薯 (XXS) 的用户脚本集合
 
-> 作者：**小小薯 (XXS)** · 发布平台：GitHub + Greasy Fork
+> 作者：**小小薯 (XXS)** · 仓库：[lijkop/xxs-userscript-engineer](https://github.com/lijkop/xxs-userscript-engineer) · Greasy Fork：[xxs-zyfx](https://greasyfork.org/zh-CN/users/995681-xxs-zyfx)
 > 一套自用出发、逐步公开的用户脚本，覆盖内容屏蔽、搜索效率、文本处理与内容剪藏。
 
 ## ⚠️ 开始使用前请先看
