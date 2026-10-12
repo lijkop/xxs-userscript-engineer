@@ -118,6 +118,8 @@ https://cdn.jsdelivr.net/gh/{USER}/{REPO}@main/scripts/{SLUG}.user.js
 
 > 已知冲突点：设置外部源码同步后，Greasy Fork 会在它托管的副本里追加自己的 `@updateURL` / `@downloadURL`，而源码中已带 GitHub 的地址，可能出现两个更新源。建议先用一个脚本实测（改版本号 → push → 观察 Tampermonkey 拉到的是 GitHub 版本还是 GF 版本），确认更新路径后再批量配置。
 
+> 已知缓存现象（实测于 2026-10-13）：`raw.githubusercontent.com/<user>/<repo>/main/...` 这个短路径有约 5 分钟的 CDN 缓存，push 完成后立刻访问仍会返回旧内容，容易误判为推送失败。排查时改用 `https://raw.githubusercontent.com/<user>/<repo>/refs/heads/main/...` 形式即可读到最新内容；正常更新场景等待几分钟即可，无需改动脚本里的地址。
+
 ### 同步的触发条件
 
 - **自动**：Greasy Fork 会定期（约每日）检查外部源码；

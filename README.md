@@ -50,6 +50,7 @@
 ```
 
 - 必须提升 `@version`，否则客户端不会认为有新版本。
+- GitHub raw 存在约 5 分钟的 CDN 缓存：刚 push 完立刻在 Tampermonkey 里点「检查更新」，可能仍拿到旧版本，过几分钟再试即可（不是推送失败）。
 - 详细说明与已知注意事项见 [PUBLISH-CHECKLIST.md](PUBLISH-CHECKLIST.md)。
 
 ## 目录结构
