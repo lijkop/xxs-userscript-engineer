@@ -1,18 +1,25 @@
-name: Sync userscripts to Greasy Fork
+name: Validate and sync userscripts
 
-# 每次 push 到 main 且改动 scripts/ 下的脚本时：
+# 每次 push 到 main 且改动 scripts/ 或 docs/ 时：
 #   1) 校验每个脚本的用户脚本元数据是否齐全
-#   2) 批量触发 Greasy Fork 的外部源码同步
+#   2) 校验每个脚本都有对应的 docs/<脚本名>.md，且文档版本号与 @version 一致
+#   3) 可选：批量触发 Greasy Fork 的外部源码同步
 #
-# 使用前需要在仓库 Settings -> Secrets and variables -> Actions 里添加：
-#   GF_SYNC_URLS = Greasy Fork 各脚本同步页给出的 Webhook 地址，多个用空格分隔
-# 没配置时同步步骤会跳过，不会报错。
+# Greasy Fork 侧建议用「账号级 Webhook」（设置一次覆盖全部脚本）：
+#   仓库 Settings -> Webhooks -> Add webhook
+#   Payload URL: https://api.greasyfork.org/zh-CN/users/<你的用户>/webhook
+#   Content type: application/json，事件选 Just the push event
+#
+# 本 workflow 的 sync 步骤是可选兜底：在仓库 Secrets 里配置 GF_SYNC_URLS
+# （多个同步地址用空格分隔，也可把 docs 的附加信息同步地址一并列上）。
+# 未配置时会自动跳过，不会报错。
 
 on:
   push:
     branches: [main]
     paths:
       - 'scripts/**.user.js'
+      - 'docs/**.md'
   workflow_dispatch:
 
 jobs:
@@ -20,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Validate userscript metadata
         run: |
           fail=0
@@ -37,11 +45,40 @@ jobs:
           done
           exit $fail
 
+      - name: Validate docs exist and versions match
+        run: |
+          fail=0
+          for f in scripts/*.user.js; do
+            base=$(basename "$f" .user.js)
+            doc="docs/$base.md"
+            if [ ! -f "$doc" ]; then
+              echo "::error file=$f::missing detail doc docs/$base.md"
+              fail=1
+              continue
+            fi
+            sv=$(grep -m1 -oP '^// @version\s+\K[0-9]+\.[0-9]+\.[0-9]+' "$f")
+            dv=$(grep -m1 -oP '版本：\K[0-9]+\.[0-9]+\.[0-9]+' "$doc")
+            if [ -z "$dv" ]; then
+              echo "::error file=$doc::missing version line (expected '> 版本：x.y.z')"
+              fail=1
+            elif [ "$sv" != "$dv" ]; then
+              echo "::error file=$doc::version mismatch: script=$sv doc=$dv"
+              fail=1
+            fi
+          done
+          for d in docs/*.md; do
+            base=$(basename "$d" .md)
+            if [ ! -f "scripts/$base.user.js" ]; then
+              echo "::warning file=$d::no matching script scripts/$base.user.js"
+            fi
+          done
+          exit $fail
+
   sync:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Greasy Fork sync
+      - name: Trigger Greasy Fork sync (optional)
         env:
           GF_SYNC_URLS: ${{ secrets.GF_SYNC_URLS }}
         run: |
