@@ -2,9 +2,10 @@
 // @name         微博内容屏蔽器
 // @name:en      Weibo Content Blocker
 // @namespace    https://github.com/yourname/weibo-blocker
-// @version      3.4.0
-// @description  按关键词屏蔽微博内容，支持悬浮窗管理、批量导入、屏蔽全部超话与蓝 V，隐藏后不占位。
-// @description:en Block Weibo posts by keyword with a floating manager, bulk import, super-topic and verified-account filters; leaves no empty gaps.
+// @version      3.4.1
+// @description  按关键词屏蔽微博内容，支持悬浮窗管理、批量导入、屏蔽全部超话与蓝 V，隐藏后不占位。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按关键词屏蔽微博内容，支持悬浮窗管理、批量导入、屏蔽全部超话与蓝 V，隐藏后不占位。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Block Weibo posts by keyword with a floating manager, bulk import, super-topic and verified-account filters; leaves no empty gaps. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

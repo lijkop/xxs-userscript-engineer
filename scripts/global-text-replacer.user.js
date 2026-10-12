@@ -2,9 +2,10 @@
 // @name         全网文本替换器
 // @name:en      Global Text Replacer
 // @namespace    http://tampermonkey.net/
-// @version      1.4.0
-// @description  按自定义规则在全网页面替换文本内容，适配 React/Vue 与虚拟列表，支持首次加载、动态变更与定时兜底。
-// @description:en Replace text on any site with custom rules; works with React/Vue and virtual lists, covering first load, dynamic updates and periodic sweeps.
+// @version      1.4.1
+// @description  按自定义规则在全网页面替换文本内容，适配 React/Vue 与虚拟列表，支持首次加载、动态变更与定时兜底。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按自定义规则在全网页面替换文本内容，适配 React/Vue 与虚拟列表，支持首次加载、动态变更与定时兜底。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Replace text on any site with custom rules; works with React/Vue and virtual lists, covering first load, dynamic updates and periodic sweeps. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

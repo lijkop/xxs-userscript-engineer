@@ -2,9 +2,10 @@
 // @name         创作者跨平台管理面板
 // @name:en      Creator Cross-Platform Panel
 // @namespace    http://tampermonkey.net/
-// @version      2.0.0
-// @description  为跨平台创作者提供常驻导航面板，支持边缘吸附、平台与标签筛选、备注、数据导入导出。
-// @description:en A persistent navigation panel for cross-platform creators: edge docking, platform/tag filtering, notes, data import/export.
+// @version      2.0.1
+// @description  为跨平台创作者提供常驻导航面板，支持边缘吸附、平台与标签筛选、备注、数据导入导出。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 为跨平台创作者提供常驻导航面板，支持边缘吸附、平台与标签筛选、备注、数据导入导出。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en A persistent navigation panel for cross-platform creators: edge docking, platform/tag filtering, notes, data import/export. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

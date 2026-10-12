@@ -2,9 +2,10 @@
 // @name         小红书评论批量复制
 // @name:en      Xiaohongshu Comment Copier
 // @namespace    http://tampermonkey.net/
-// @version      1.1.1
-// @description  悬浮球触发，一键提取小红书笔记评论并复制到剪贴板，支持自动滚动加载。
-// @description:en A floating ball that extracts Xiaohongshu note comments to the clipboard, with auto-scroll loading.
+// @version      1.1.2
+// @description  悬浮球触发，一键提取小红书笔记评论并复制到剪贴板，支持自动滚动加载。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 悬浮球触发，一键提取小红书笔记评论并复制到剪贴板，支持自动滚动加载。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en A floating ball that extracts Xiaohongshu note comments to the clipboard, with auto-scroll loading. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

@@ -2,9 +2,10 @@
 // @name         即刻内容屏蔽器
 // @name:en      Jike Content Blocker
 // @namespace    http://tampermonkey.net/
-// @version      3.2.0
-// @description  按关键词屏蔽即刻时间线内容，支持已读隐藏与去重处理。
-// @description:en Block Jike timeline posts by keyword, with read-hiding and deduplication.
+// @version      3.2.1
+// @description  按关键词屏蔽即刻时间线内容，支持已读隐藏与去重处理。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按关键词屏蔽即刻时间线内容，支持已读隐藏与去重处理。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Block Jike timeline posts by keyword, with read-hiding and deduplication. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

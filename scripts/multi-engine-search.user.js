@@ -2,9 +2,10 @@
 // @name         多引擎批量搜索
 // @name:en      Multi-Engine Batch Search
 // @namespace    https://tampermonkey.net/
-// @version      2.1.1
-// @description  批量在多个搜索引擎同时打开当前关键词，支持引擎分组、快捷键录制、油猴菜单、悬浮按钮、拖拽排序与配置导入导出。
-// @description:en Open the current query across multiple search engines at once: engine groups, hotkey recording, menu commands, floating button, drag sorting, import/export.
+// @version      2.1.2
+// @description  批量在多个搜索引擎同时打开当前关键词，支持引擎分组、快捷键录制、油猴菜单、悬浮按钮、拖拽排序与配置导入导出。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 批量在多个搜索引擎同时打开当前关键词，支持引擎分组、快捷键录制、油猴菜单、悬浮按钮、拖拽排序与配置导入导出。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Open the current query across multiple search engines at once: engine groups, hotkey recording, menu commands, floating button, drag sorting, import/export. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

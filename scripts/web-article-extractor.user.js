@@ -2,9 +2,10 @@
 // @name         网页正文一键提取
 // @name:en      Web Article Extractor
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @description  快捷键提取并清洗网页正文（保留链接文字、去除链接 URL）到剪贴板，带可视化快捷键设置面板。
-// @description:en Hotkey to extract and clean page article text (keeps link text, drops URLs) to the clipboard, with a hotkey settings panel.
+// @version      1.0.1
+// @description  快捷键提取并清洗网页正文（保留链接文字、去除链接 URL）到剪贴板，带可视化快捷键设置面板。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 快捷键提取并清洗网页正文（保留链接文字、去除链接 URL）到剪贴板，带可视化快捷键设置面板。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Hotkey to extract and clean page article text (keeps link text, drops URLs) to the clipboard, with a hotkey settings panel. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

@@ -2,9 +2,10 @@
 // @name         X (Twitter) 内容屏蔽器
 // @name:en      X (Twitter) Content Blocker
 // @namespace    http://tampermonkey.net/
-// @version      2.1.1
-// @description  按关键词、用户名与互动数（如零评论）隐藏 X/Twitter 上的推文与回复，隐藏后不残留空白。
-// @description:en Hide tweets and replies on X/Twitter by keyword, username and engagement (e.g. zero comments), leaving no blank gaps.
+// @version      2.1.2
+// @description  按关键词、用户名与互动数（如零评论）隐藏 X/Twitter 上的推文与回复，隐藏后不残留空白。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按关键词、用户名与互动数（如零评论）隐藏 X/Twitter 上的推文与回复，隐藏后不残留空白。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Hide tweets and replies on X/Twitter by keyword, username and engagement (e.g. zero comments), leaving no blank gaps. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

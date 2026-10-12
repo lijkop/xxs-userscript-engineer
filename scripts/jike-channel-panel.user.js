@@ -2,9 +2,10 @@
 // @name         即刻分区快捷面板
 // @name:en      Jike Channel Quick Panel
 // @namespace    http://tampermonkey.net/
-// @version      0.3.0
-// @description  在即刻网页版右下角添加常驻悬浮面板，用于收藏和快速跳转自定义分区。
-// @description:en Adds a persistent floating panel on Jike web to bookmark and jump to custom channels.
+// @version      0.3.1
+// @description  在即刻网页版右下角添加常驻悬浮面板，用于收藏和快速跳转自定义分区。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 在即刻网页版右下角添加常驻悬浮面板，用于收藏和快速跳转自定义分区。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Adds a persistent floating panel on Jike web to bookmark and jump to custom channels. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

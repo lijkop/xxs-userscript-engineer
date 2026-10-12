@@ -2,9 +2,10 @@
 // @name         Reddit 内容屏蔽器
 // @name:en      Reddit Content Blocker
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
-// @description  按关键词与用户名屏蔽 Reddit 帖子、评论和用户，支持规则导入导出与可视化面板。
-// @description:en Block Reddit posts, comments and users by keyword or username, with rule import/export and a control panel.
+// @version      1.0.2
+// @description  按关键词与用户名屏蔽 Reddit 帖子、评论和用户，支持规则导入导出与可视化面板。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按关键词与用户名屏蔽 Reddit 帖子、评论和用户，支持规则导入导出与可视化面板。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Block Reddit posts, comments and users by keyword or username, with rule import/export and a control panel. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

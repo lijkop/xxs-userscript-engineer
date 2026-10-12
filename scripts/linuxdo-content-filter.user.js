@@ -2,9 +2,10 @@
 // @name         Linux.do 内容过滤器
 // @name:en      Linux.do Content Filter
 // @namespace    https://linux.do/
-// @version      1.0.0
-// @description  按关键词过滤 Linux.do 的标签、标题、主帖正文与评论回复。
-// @description:en Keyword filter for Linux.do tags, titles, post bodies and replies.
+// @version      1.0.1
+// @description  按关键词过滤 Linux.do 的标签、标题、主帖正文与评论回复。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 按关键词过滤 Linux.do 的标签、标题、主帖正文与评论回复。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Keyword filter for Linux.do tags, titles, post bodies and replies. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues

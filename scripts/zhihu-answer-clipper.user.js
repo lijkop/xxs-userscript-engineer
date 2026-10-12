@@ -2,9 +2,10 @@
 // @name         知乎回答剪藏
 // @name:en      Zhihu Answer Clipper
 // @namespace    http://tampermonkey.net/
-// @version      1.6.1
-// @description  提取知乎问题页的回答正文并复制到剪贴板，便于剪藏保存。
-// @description:en Extract Zhihu answer content and copy it to the clipboard for clipping.
+// @version      1.6.2
+// @description  提取知乎问题页的回答正文并复制到剪贴板，便于剪藏保存。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 提取知乎问题页的回答正文并复制到剪贴板，便于剪藏保存。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Extract Zhihu answer content and copy it to the clipboard for clipping. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
