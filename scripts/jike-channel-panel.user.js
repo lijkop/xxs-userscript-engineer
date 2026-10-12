@@ -6,8 +6,10 @@
 // @description  在即刻网页版右下角添加常驻悬浮面板，用于收藏和快速跳转自定义分区。
 // @description:en Adds a persistent floating panel on Jike web to bookmark and jump to custom channels.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/jike-channel-panel.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/jike-channel-panel.user.js
 // @match        https://web.okjike.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue

@@ -6,8 +6,10 @@
 // @description  提取知乎问题页的回答正文并复制到剪贴板，便于剪藏保存。
 // @description:en Extract Zhihu answer content and copy it to the clipboard for clipping.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/zhihu-answer-clipper.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/zhihu-answer-clipper.user.js
 // @match        https://www.zhihu.com/question/*
 // @grant        none
 // ==/UserScript==

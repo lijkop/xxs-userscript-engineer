@@ -6,8 +6,10 @@
 // @description  按关键词过滤 Linux.do 的标签、标题、主帖正文与评论回复。
 // @description:en Keyword filter for Linux.do tags, titles, post bodies and replies.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/linuxdo-content-filter.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/linuxdo-content-filter.user.js
 // @match        https://linux.do/*
 // @match        https://*.linux.do/*
 // @grant        GM_getValue

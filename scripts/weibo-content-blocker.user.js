@@ -6,8 +6,10 @@
 // @description  按关键词屏蔽微博内容，支持悬浮窗管理、批量导入、屏蔽全部超话与蓝 V，隐藏后不占位。
 // @description:en Block Weibo posts by keyword with a floating manager, bulk import, super-topic and verified-account filters; leaves no empty gaps.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/weibo-content-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/weibo-content-blocker.user.js
 // @match        https://weibo.com/*
 // @match        https://*.weibo.com/*
 // @grant        GM_getValue

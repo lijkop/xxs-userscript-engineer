@@ -6,8 +6,10 @@
 // @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，并净化评论区（插眼、关键词、纯表情、楼中楼）。
 // @description:en Filter Xiaoheihe forum: posts by keyword, zero engagement or section, plus comment cleanup (bookmark replies, keywords, emoji-only, nested replies).
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/heybox-content-purifier.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/heybox-content-purifier.user.js
 // @match        https://www.xiaoheihe.cn/app/bbs/*
 // @grant        GM_getValue
 // @grant        GM_setValue

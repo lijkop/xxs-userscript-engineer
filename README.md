@@ -5,7 +5,7 @@
 
 ## ⚠️ 开始使用前请先看
 
-- 仓库地址中的 `xxs-scripts` / `userscripts` 是**占位值**，确定 GitHub 用户名后只需替换脚本里的 `@homepage`、`@supportURL` 与本文档中的链接；**`@namespace` 保持原值不动**，以免影响已安装的老用户。
+- 脚本内已写入正式地址：`@homepage`、`@supportURL`、`@updateURL`、`@downloadURL` 均指向 `https://github.com/XXS-pickle/userscripts`；**`@namespace` 保持原值不动**，以免影响已安装的老用户。
 - 本仓库脚本**尚未在浏览器实测**（仅完成静态分析与元数据规范化），首发前建议在目标站点逐个验证。
 - 本次只调整了脚本**显示名**（去掉“终极版”“稳定去重版”等后缀）与描述，`@namespace` 未变，因此从 Greasy Fork 更新的老用户不会丢失本地规则。若某次更新后出现重复条目，导出配置后删除旧条目即可。
 
@@ -35,19 +35,22 @@
 ## 安装方式
 
 1. **从 GitHub 直接安装**（推荐开发版）：安装 Tampermonkey 后打开
-   `https://raw.githubusercontent.com/xxs-scripts/userscripts/main/scripts/<脚本名>.user.js`
+   `https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/<脚本名>.user.js`
 2. **从 Greasy Fork 安装**（推荐日常使用，带自动更新）：搜索脚本名或访问脚本主页。
 3. **本地安装**：把 `scripts/` 下的 `.user.js` 拖进浏览器即可。
 
 ## 更新机制
 
+脚本内已配置 `@updateURL` / `@downloadURL` 指向本仓库的 raw 地址，因此 Tampermonkey 会**直接从 GitHub 检查更新**（默认每 24 小时一次，可在设置中改为“总是”）。
+
 ```text
-本地改代码 → 提升 @version → git push → GitHub Webhook 触发 Greasy Fork 同步
-           → Greasy Fork 生成新版本 → 用户端 Tampermonkey 自动更新
+本地改代码 → 提升 @version → git push
+   ├─ Tampermonkey 向 GitHub raw 比对版本 → 自动更新
+   └─ Greasy Fork 同步 GitHub 源码 → 生成新版本供安装
 ```
 
-- Greasy Fork 只在**版本号变大**时发布新版本，改了代码不 bump 版本号不会生效。
-- 详细说明见 [PUBLISH-CHECKLIST.md](PUBLISH-CHECKLIST.md)。
+- 必须提升 `@version`，否则客户端不会认为有新版本。
+- 详细说明与已知注意事项见 [PUBLISH-CHECKLIST.md](PUBLISH-CHECKLIST.md)。
 
 ## 目录结构
 

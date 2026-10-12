@@ -6,8 +6,10 @@
 // @description  小红书网页版关键词屏蔽工具，支持可视化面板、无限滚动适配、隐藏与模糊两种拦截模式、规则本地持久化。
 // @description:en Keyword blocker for Xiaohongshu web: control panel, infinite-scroll support, hide/blur modes, persistent local rules.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/xhs-keyword-blocker.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/xhs-keyword-blocker.user.js
 // @match        *://*.xiaohongshu.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue

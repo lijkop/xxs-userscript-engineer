@@ -6,8 +6,10 @@
 // @description  自动点击知乎问答页的“查看全部回答”，不触发页面滚动。
 // @description:en Auto-clicks "view all answers" on Zhihu question pages without scrolling the page.
 // @author       小小薯 (XXS)
-// @homepage     https://github.com/xxs-scripts/userscripts
-// @supportURL   https://github.com/xxs-scripts/userscripts/issues
+// @homepage     https://github.com/XXS-pickle/userscripts
+// @supportURL   https://github.com/XXS-pickle/userscripts/issues
+// @updateURL    https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/zhihu-auto-expand-answers.user.js
+// @downloadURL  https://raw.githubusercontent.com/XXS-pickle/userscripts/main/scripts/zhihu-auto-expand-answers.user.js
 // @match        *://*.zhihu.com/question/*
 // @grant        none
 // @run-at       document-idle
