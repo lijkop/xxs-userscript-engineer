@@ -1,0 +1,55 @@
+name: Sync userscripts to Greasy Fork
+
+# 每次 push 到 main 且改动 scripts/ 下的脚本时：
+#   1) 校验每个脚本的用户脚本元数据是否齐全
+#   2) 批量触发 Greasy Fork 的外部源码同步
+#
+# 使用前需要在仓库 Settings -> Secrets and variables -> Actions 里添加：
+#   GF_SYNC_URLS = Greasy Fork 各脚本同步页给出的 Webhook 地址，多个用空格分隔
+# 没配置时同步步骤会跳过，不会报错。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**.user.js'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate userscript metadata
+        run: |
+          fail=0
+          for f in scripts/*.user.js; do
+            for k in name version description match; do
+              if ! grep -q "^// @$k" "$f"; then
+                echo "::error file=$f::missing @$k"
+                fail=1
+              fi
+            done
+            if ! grep -q "^// ==/UserScript==" "$f"; then
+              echo "::error file=$f::unclosed metadata block"
+              fail=1
+            fi
+          done
+          exit $fail
+
+  sync:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Greasy Fork sync
+        env:
+          GF_SYNC_URLS: ${{ secrets.GF_SYNC_URLS }}
+        run: |
+          if [ -z "$GF_SYNC_URLS" ]; then
+            echo "GF_SYNC_URLS is not configured, skipping."
+            exit 0
+          fi
+          for url in $GF_SYNC_URLS; do
+            echo "-> $url"
+            curl -sS -X POST "$url" -o /dev/null -w "   http %{http_code}\n" || echo "   failed"
+          done
