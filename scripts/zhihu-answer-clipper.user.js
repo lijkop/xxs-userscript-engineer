@@ -2,7 +2,7 @@
 // @name         知乎回答剪藏
 // @name:en      Zhihu Answer Clipper
 // @namespace    http://tampermonkey.net/
-// @version      1.6.0
+// @version      1.6.1
 // @description  提取知乎问题页的回答正文并复制到剪贴板，便于剪藏保存。
 // @description:en Extract Zhihu answer content and copy it to the clipboard for clipping.
 // @author       小小薯 (XXS)
@@ -10,7 +10,7 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/zhihu-answer-clipper.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/zhihu-answer-clipper.user.js
-// @match        https://www.zhihu.com/question/*
+// @match        *://*.zhihu.com/question/*
 // @grant        none
 // ==/UserScript==
 

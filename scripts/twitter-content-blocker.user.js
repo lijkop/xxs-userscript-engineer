@@ -2,7 +2,7 @@
 // @name         X (Twitter) 内容屏蔽器
 // @name:en      X (Twitter) Content Blocker
 // @namespace    http://tampermonkey.net/
-// @version      2.1.0
+// @version      2.1.1
 // @description  按关键词、用户名与互动数（如零评论）隐藏 X/Twitter 上的推文与回复，隐藏后不残留空白。
 // @description:en Hide tweets and replies on X/Twitter by keyword, username and engagement (e.g. zero comments), leaving no blank gaps.
 // @author       小小薯 (XXS)
@@ -10,8 +10,8 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/twitter-content-blocker.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/twitter-content-blocker.user.js
-// @match        *://twitter.com/*
-// @match        *://x.com/*
+// @match        *://*.twitter.com/*
+// @match        *://*.x.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand

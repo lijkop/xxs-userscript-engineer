@@ -2,7 +2,7 @@
 // @name         小黑盒弹窗自动关闭
 // @name:en      HeyBox Popup Auto Dismiss
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  自动点击小黑盒页面上的“取消”按钮，关闭干扰弹窗。
 // @description:en Automatically clicks the "Cancel" button in popups on Xiaoheihe (HeyBox) pages.
 // @author       小小薯 (XXS)
@@ -10,7 +10,7 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/heybox-popup-dismiss.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/heybox-popup-dismiss.user.js
-// @match        https://www.xiaoheihe.cn/*
+// @match        https://*.xiaoheihe.cn/*
 // @grant        none
 // ==/UserScript==
 

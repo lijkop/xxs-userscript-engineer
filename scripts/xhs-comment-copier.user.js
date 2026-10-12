@@ -2,7 +2,7 @@
 // @name         小红书评论批量复制
 // @name:en      Xiaohongshu Comment Copier
 // @namespace    http://tampermonkey.net/
-// @version      1.1.0
+// @version      1.1.1
 // @description  悬浮球触发，一键提取小红书笔记评论并复制到剪贴板，支持自动滚动加载。
 // @description:en A floating ball that extracts Xiaohongshu note comments to the clipboard, with auto-scroll loading.
 // @author       小小薯 (XXS)
@@ -10,8 +10,8 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/xhs-comment-copier.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/xhs-comment-copier.user.js
-// @match        https://www.xiaohongshu.com/explore/*
-// @match        https://www.xiaohongshu.com/search_result/*
+// @match        *://*.xiaohongshu.com/explore/*
+// @match        *://*.xiaohongshu.com/search_result/*
 // @grant        GM_addStyle
 // @grant        GM_setClipboard
 // @grant        GM_notification

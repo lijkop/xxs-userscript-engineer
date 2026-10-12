@@ -2,7 +2,7 @@
 // @name         Reddit 内容屏蔽器
 // @name:en      Reddit Content Blocker
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  按关键词与用户名屏蔽 Reddit 帖子、评论和用户，支持规则导入导出与可视化面板。
 // @description:en Block Reddit posts, comments and users by keyword or username, with rule import/export and a control panel.
 // @author       小小薯 (XXS)
@@ -10,6 +10,7 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/reddit-content-blocker.user.js
+// @match        https://reddit.com/*
 // @match        https://www.reddit.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue

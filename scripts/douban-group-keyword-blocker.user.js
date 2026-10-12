@@ -2,7 +2,7 @@
 // @name         豆瓣小组关键词屏蔽器
 // @name:en      Douban Group Keyword Blocker
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  屏蔽豆瓣小组中标签或标题命中关键词的帖子。
 // @description:en Hide Douban group topics whose tags or titles match your keywords.
 // @author       小小薯 (XXS)
@@ -10,6 +10,7 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/douban-group-keyword-blocker.user.js
+// @match        https://douban.com/group/*
 // @match        https://www.douban.com/group/*
 // @grant        GM_getValue
 // @grant        GM_setValue

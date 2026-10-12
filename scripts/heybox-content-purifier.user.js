@@ -2,7 +2,7 @@
 // @name         小黑盒内容净化器
 // @name:en      HeyBox Content Purifier
 // @namespace    https://heybox.com/
-// @version      4.1.0
+// @version      4.1.1
 // @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，并净化评论区（插眼、关键词、纯表情、楼中楼）。
 // @description:en Filter Xiaoheihe forum: posts by keyword, zero engagement or section, plus comment cleanup (bookmark replies, keywords, emoji-only, nested replies).
 // @author       小小薯 (XXS)
@@ -10,7 +10,7 @@
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
 // @updateURL    https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/heybox-content-purifier.user.js
 // @downloadURL  https://raw.githubusercontent.com/lijkop/xxs-userscript-engineer/main/scripts/heybox-content-purifier.user.js
-// @match        https://www.xiaoheihe.cn/app/bbs/*
+// @match        https://*.xiaoheihe.cn/app/bbs/*
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand
