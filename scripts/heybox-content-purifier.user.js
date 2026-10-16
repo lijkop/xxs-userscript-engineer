@@ -2,10 +2,10 @@
 // @name         小黑盒内容净化器
 // @name:en      HeyBox Content Purifier
 // @namespace    https://heybox.com/
-// @version      4.1.2
-// @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，并净化评论区（插眼、关键词、纯表情、楼中楼）。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
-// @description:zh-CN 小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，并净化评论区（插眼、关键词、纯表情、楼中楼）。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
-// @description:en Filter Xiaoheihe forum: posts by keyword, zero engagement or section, plus comment cleanup (bookmark replies, keywords, emoji-only, nested replies). Feedback via Telegram: https://t.me/zzyyffxx
+// @version      4.2.0
+// @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:zh-CN 小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
+// @description:en Filter Xiaoheihe posts and comments (keywords, zero engagement, sections, emoji-only, nested replies), plus one-click export of the comment section to Markdown. Feedback via Telegram: https://t.me/zzyyffxx
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
@@ -15,6 +15,8 @@
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand
+// @grant        GM_setClipboard
+// @grant        GM_notification
 // @license      MIT
 // ==/UserScript==
 
@@ -172,7 +174,152 @@
     };
 
     // ==========================================
-    // 3. UI控制器
+    // 3. 评论区导出（v4.2.0 新增）
+    //    选择器核对自小黑盒帖子详情页的真实运行时 DOM
+    // ==========================================
+    const CommentExport = {
+        SEL: {
+            rootItem: '.link-comment__comment-item',
+            userName: '.info-box__username',
+            writerTag: '.info-box__writer-tag',
+            level: '.hb-level-tag__inner__text',
+            like: '.like-box__cnt',
+            content: '.comment-item__content',
+            image: '.comment-item__image',
+            childItem: '.comment-children-item',
+            childUser: '.children-item__comment-creator',
+            childContent: '.children-item__comment-content',
+            loadAll: '.comment-children__load-all'
+        },
+
+        store: new Map(),
+        running: false,
+
+        /** 表情是 [data-emoji] 的 span，转成 [表情名] 再取纯文本 */
+        textOf(el) {
+            if (!el) return '';
+            const clone = el.cloneNode(true);
+            clone.querySelectorAll('[data-emoji]').forEach((s) => {
+                const name = (s.getAttribute('data-emoji') || '').replace(/^cube_/, '');
+                s.replaceWith(document.createTextNode(name ? '[' + name + ']' : ''));
+            });
+            return (clone.textContent || '').replace(/\s+/g, ' ').trim();
+        },
+
+        collect() {
+            let added = 0;
+            document.querySelectorAll(this.SEL.rootItem).forEach((root) => {
+                const id = root.getAttribute('data-comment-id');
+                if (!id) return;
+                if (!this.store.has(id)) added++;
+                this.store.set(id, {
+                    id,
+                    isTop: root.classList.contains('top'),
+                    isAuthor: !!root.querySelector(this.SEL.writerTag),
+                    user: (root.querySelector(this.SEL.userName)?.innerText || '').trim() || '匿名盒友',
+                    level: (root.querySelector(this.SEL.level)?.innerText || '').trim(),
+                    like: Number((root.querySelector(this.SEL.like)?.innerText || '').replace(/\D/g, '')) || 0,
+                    text: this.textOf(root.querySelector(this.SEL.content)),
+                    images: root.querySelectorAll(this.SEL.image).length,
+                    children: [...root.querySelectorAll(this.SEL.childItem)].map((ci) => ({
+                        id: ci.getAttribute('data-comment-id') || '',
+                        user: (ci.querySelector(this.SEL.childUser)?.innerText || '').trim() || '匿名盒友',
+                        text: this.textOf(ci.querySelector(this.SEL.childContent))
+                    }))
+                });
+            });
+            return added;
+        },
+
+        /** 点击所有「全部 N 条回复」，返回本次新点的数量 */
+        expandAll() {
+            let n = 0;
+            document.querySelectorAll(this.SEL.loadAll).forEach((btn) => {
+                if (btn.dataset.hbExpanded) return;
+                btn.dataset.hbExpanded = '1';
+                btn.click();
+                n++;
+            });
+            return n;
+        },
+
+        /** 评论区可能是独立滚动容器，滚 window 无效 */
+        findScroller() {
+            let n = document.querySelector(this.SEL.rootItem);
+            while (n && n !== document.body && n !== document.documentElement) {
+                const oy = getComputedStyle(n).overflowY;
+                if ((oy === 'auto' || oy === 'scroll') && n.scrollHeight > n.clientHeight + 40) return n;
+                n = n.parentElement;
+            }
+            return document.scrollingElement || document.documentElement;
+        },
+
+        markdown() {
+            const list = [...this.store.values()];
+            const sub = list.reduce((n, c) => n + c.children.length, 0);
+            const out = [
+                '# 小黑盒帖子评论',
+                '',
+                `> 根评论 ${list.length} 条 · 回复 ${sub} 条 · 导出于 ${new Date().toLocaleString()}`,
+                ''
+            ];
+            list.forEach((c, i) => {
+                const tags = [c.isTop ? '📌 置顶' : '', c.isAuthor ? '作者' : '', c.level].filter(Boolean).join(' · ');
+                out.push(`## ${i + 1}. ${c.user}`);
+                out.push(`👍 ${c.like}${tags ? ' · ' + tags : ''}`);
+                out.push('');
+                out.push(c.text || '（无正文）');
+                if (c.images) out.push(`（附图 ${c.images} 张）`);
+                out.push('');
+                c.children.forEach((k) => out.push(`- **${k.user}**：${k.text || '（无正文）'}`));
+                if (c.children.length) out.push('');
+            });
+            return out.join('\n');
+        },
+
+        plain() {
+            const rows = ['层级\t用户名\t点赞\t等级\t内容'];
+            this.store.forEach((c) => {
+                rows.push(`根评论\t${c.user}\t${c.like}\t${c.level}\t${c.text.replace(/\t/g, ' ')}`);
+                c.children.forEach((k) => rows.push(`　└ 回复\t${k.user}\t\t\t${k.text.replace(/\t/g, ' ')}`));
+            });
+            return rows.join('\n');
+        },
+
+        async run(onProgress) {
+            if (this.running) return this.store.size;
+            this.running = true;
+            let idle = 0;
+            let round = 0;
+
+            while (this.running && round < 120) {
+                round++;
+                const expanded = this.expandAll();
+                const added = this.collect();
+                onProgress(this.store.size, round);
+
+                const sc = this.findScroller();
+                sc.scrollTop = Math.min(sc.scrollTop + 700, sc.scrollHeight);
+
+                await new Promise((r) => setTimeout(r, 800));
+                this.collect();
+
+                idle = (expanded === 0 && added === 0) ? idle + 1 : 0;
+                if (idle >= 4) break;
+            }
+
+            this.running = false;
+            this.collect();
+            return this.store.size;
+        },
+
+        stop() {
+            this.running = false;
+        }
+    };
+
+    // ==========================================
+    // 4. UI控制器
     // ==========================================
     const UI = {
         shadowRoot: null,
@@ -226,6 +373,13 @@
                     select { padding: 4px; border-radius: 4px; border: 1px solid #ddd; font-size: 12px; }
                     .stats { font-size: 11px; color: #888; text-align: center; margin-top: 10px; background: #f9f9f9; padding: 8px; border-radius: 6px; }
                     #trigger { position: fixed; bottom: 30px; right: 30px; width: 44px; height: 44px; background: #1a1a1a; color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 2147483646; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s; font-size: 20px; }
+                    .btn-row { display: flex; gap: 6px; }
+                    .btn { flex: 1; padding: 7px 10px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; transition: background 0.15s; }
+                    .btn-main { background: #1890ff; color: #fff; }
+                    .btn-main:hover { background: #40a9ff; }
+                    .btn-sub { background: #f0f0f0; color: #333; }
+                    .btn-sub:hover { background: #e6e6e6; }
+                    .export-hint { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.6; }
                 </style>
             `;
 
@@ -267,6 +421,15 @@
                             <input type="text" id="kw-comment-input" placeholder="输入评论屏蔽词回车...">
                             <div class="tag-cloud" id="kw-comment-list">${getTagsHTML(Config.data.commentKeywords, 'comment')}</div>
                             <div class="row" style="margin-top:8px"><span>屏蔽纯表情/空评论</span> <label class="switch"><input type="checkbox" id="chk-pure-emoji" ${Config.data.blockPureEmoji ? 'checked' : ''}><span class="slider"></span></label></div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-title">评论区导出</div>
+                            <div class="btn-row">
+                                <button class="btn btn-main" id="btn-export-run">采集并复制</button>
+                                <button class="btn btn-sub" id="btn-export-copy">直接复制</button>
+                            </div>
+                            <div class="export-hint" id="export-hint">「采集并复制」会自动展开「全部 N 条回复」并向下滚动加载，完成后再复制为 Markdown。</div>
                         </div>
 
                         <div class="stats">
@@ -331,6 +494,48 @@
                 Config.save();
                 Engine.refreshAll();
             };
+
+            // ---- 评论区导出 ----
+            root.getElementById('btn-export-copy').onclick = () => this.copyExport();
+
+            root.getElementById('btn-export-run').onclick = async () => {
+                const hint = root.getElementById('export-hint');
+                const btn = root.getElementById('btn-export-run');
+
+                if (CommentExport.running) {
+                    CommentExport.stop();
+                    btn.innerText = '采集并复制';
+                    hint.innerText = '已停止采集，可点「直接复制」拿走当前结果。';
+                    return;
+                }
+
+                btn.innerText = '采集中…（点击停止）';
+                hint.innerText = '正在展开「全部 N 条回复」并向下滚动…';
+
+                await CommentExport.run((n, round) => {
+                    hint.innerText = `第 ${round} 轮 · 已采集 ${n} 条根评论`;
+                });
+
+                btn.innerText = '采集并复制';
+                this.copyExport();
+            };
+        },
+
+        /** 把已采集的评论复制到剪贴板（Markdown） */
+        copyExport() {
+            const hint = this.shadowRoot.getElementById('export-hint');
+            if (!CommentExport.store.size) {
+                if (hint) hint.innerText = '还没抓到评论：先滚动到评论区，或点「采集并复制」。';
+                return;
+            }
+            const sub = [...CommentExport.store.values()].reduce((n, c) => n + c.children.length, 0);
+            GM_setClipboard(CommentExport.markdown(), 'text');
+            if (hint) hint.innerText = `已复制：${CommentExport.store.size} 条根评论 / ${sub} 条回复。`;
+            GM_notification({
+                title: '小黑盒评论导出',
+                text: `已复制 ${CommentExport.store.size} 条根评论（含 ${sub} 条回复）到剪贴板`,
+                timeout: 2500
+            });
         },
 
         refreshTags() {
