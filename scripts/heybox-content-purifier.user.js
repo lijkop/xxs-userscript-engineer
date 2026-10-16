@@ -2,7 +2,7 @@
 // @name         小黑盒内容净化器
 // @name:en      HeyBox Content Purifier
 // @namespace    https://heybox.com/
-// @version      4.2.1
+// @version      4.2.2
 // @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
 // @description:zh-CN 小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
 // @description:en Filter Xiaoheihe posts and comments (keywords, zero engagement, sections, emoji-only, nested replies), plus one-click export of the comment section to Markdown. Feedback via Telegram: https://t.me/zzyyffxx
@@ -318,6 +318,35 @@
             }
             this.startWatch(onCount);
             return true;
+        },
+
+        // ---- 帖文切换检测：SPA 换帖不刷新页面，必须主动清空，否则新旧评论会混在一起 ----
+
+        postKey: '',
+        routeTimer: null,
+
+        currentPostKey() {
+            const m = location.pathname.match(/\d{5,}/);
+            return m ? m[0] : location.pathname;
+        },
+
+        watchingRoute(onCleared) {
+            this.postKey = this.currentPostKey();
+            if (this.routeTimer) clearInterval(this.routeTimer);
+            this.routeTimer = setInterval(() => {
+                const key = this.currentPostKey();
+                if (key === this.postKey) return;
+                this.postKey = key;
+                const had = this.store.size;
+                this.store.clear();
+                onCleared(had);
+            }, 800);
+        },
+
+        clear() {
+            const n = this.store.size;
+            this.store.clear();
+            return n;
         }
     };
 
@@ -339,6 +368,14 @@
 
             GM_registerMenuCommand("⚙️ 净化设置", () => {
                 this.togglePanel(true);
+            });
+
+            // 切换帖文（SPA 路由变化）时自动清空，避免新旧帖子的评论混在一起
+            CommentExport.watchingRoute((had) => {
+                const hint = this.shadowRoot.getElementById('export-hint');
+                if (hint && had > 0) {
+                    hint.innerText = `检测到切换帖文，已自动清空上一条的 ${had} 条采集结果。`;
+                }
             });
         },
 
@@ -404,7 +441,10 @@
                                 <button class="btn btn-main" id="btn-export-watch">开始复制</button>
                                 <button class="btn btn-sub" id="btn-export-copy">复制结果</button>
                             </div>
-                            <div class="export-hint" id="export-hint">点「开始复制」后，自己向下滑动评论区，脚本会实时收集（自动展开「全部 N 条回复」）；点「暂停」停止，可反复切换。</div>
+                            <div class="btn-row" style="margin-top:6px">
+                                <button class="btn btn-sub" id="btn-export-clear">清空当前结果</button>
+                            </div>
+                            <div class="export-hint" id="export-hint">点「开始复制」后自己向下滑动评论区，脚本实时收集（自动展开「全部 N 条回复」）；点「暂停」停止，可反复切换。切换帖文会自动清空。</div>
                         </div>
 
                         <div class="section">
@@ -521,6 +561,12 @@
                 btn.innerText = '暂停';
                 btn.classList.add('is-on');
                 hint.innerText = '已开始实时收集，请自己向下滑动评论区。';
+            };
+
+            root.getElementById('btn-export-clear').onclick = () => {
+                const hint = root.getElementById('export-hint');
+                const n = CommentExport.clear();
+                hint.innerText = n ? `已清空 ${n} 条采集结果。` : '当前没有采集结果。';
             };
         },
 
