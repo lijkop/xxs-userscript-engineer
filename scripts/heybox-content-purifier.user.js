@@ -2,7 +2,7 @@
 // @name         小黑盒内容净化器
 // @name:en      HeyBox Content Purifier
 // @namespace    https://heybox.com/
-// @version      4.2.0
+// @version      4.2.1
 // @description  小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
 // @description:zh-CN 小黑盒论坛内容过滤：按关键词、零赞零评、分区过滤帖子，净化评论区（插眼、关键词、纯表情、楼中楼），并支持一键导出评论区为 Markdown。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
 // @description:en Filter Xiaoheihe posts and comments (keywords, zero engagement, sections, emoji-only, nested replies), plus one-click export of the comment section to Markdown. Feedback via Telegram: https://t.me/zzyyffxx
@@ -193,7 +193,6 @@
         },
 
         store: new Map(),
-        running: false,
 
         /** 表情是 [data-emoji] 的 span，转成 [表情名] 再取纯文本 */
         textOf(el) {
@@ -243,17 +242,6 @@
             return n;
         },
 
-        /** 评论区可能是独立滚动容器，滚 window 无效 */
-        findScroller() {
-            let n = document.querySelector(this.SEL.rootItem);
-            while (n && n !== document.body && n !== document.documentElement) {
-                const oy = getComputedStyle(n).overflowY;
-                if ((oy === 'auto' || oy === 'scroll') && n.scrollHeight > n.clientHeight + 40) return n;
-                n = n.parentElement;
-            }
-            return document.scrollingElement || document.documentElement;
-        },
-
         markdown() {
             const list = [...this.store.values()];
             const sub = list.reduce((n, c) => n + c.children.length, 0);
@@ -286,35 +274,50 @@
             return rows.join('\n');
         },
 
-        async run(onProgress) {
-            if (this.running) return this.store.size;
-            this.running = true;
-            let idle = 0;
-            let round = 0;
+        // ---- 手动模式：自己滑动评论区，脚本实时收集 ----
 
-            while (this.running && round < 120) {
-                round++;
-                const expanded = this.expandAll();
-                const added = this.collect();
-                onProgress(this.store.size, round);
+        watcher: null,
+        watchTimer: null,
+        watching: false,
 
-                const sc = this.findScroller();
-                sc.scrollTop = Math.min(sc.scrollTop + 700, sc.scrollHeight);
+        /** 开始实时收集（不自动滚动，滚动交给你自己） */
+        startWatch(onCount) {
+            if (this.watching) return;
+            this.collect();
 
-                await new Promise((r) => setTimeout(r, 800));
-                this.collect();
+            this.watcher = new MutationObserver(() => {
+                clearTimeout(this.watchTimer);
+                this.watchTimer = setTimeout(() => {
+                    this.expandAll();                 // 顺手展开新出现的「全部 N 条回复」
+                    const added = this.collect();
+                    if (added) onCount(this.store.size);
+                }, 250);
+            });
+            this.watcher.observe(document.body, { childList: true, subtree: true });
 
-                idle = (expanded === 0 && added === 0) ? idle + 1 : 0;
-                if (idle >= 4) break;
+            this.watching = true;
+            onCount(this.store.size);
+        },
+
+        /** 暂停实时收集，返回当前已收集的根评论数 */
+        stopWatch() {
+            if (this.watcher) {
+                this.watcher.disconnect();
+                this.watcher = null;
             }
-
-            this.running = false;
+            clearTimeout(this.watchTimer);
+            this.watching = false;
             this.collect();
             return this.store.size;
         },
 
-        stop() {
-            this.running = false;
+        toggleWatch(onCount) {
+            if (this.watching) {
+                this.stopWatch();
+                return false;
+            }
+            this.startWatch(onCount);
+            return true;
         }
     };
 
@@ -379,6 +382,7 @@
                     .btn-main:hover { background: #40a9ff; }
                     .btn-sub { background: #f0f0f0; color: #333; }
                     .btn-sub:hover { background: #e6e6e6; }
+                    .btn.is-on { background: #1f2329; color: #fff; }
                     .export-hint { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.6; }
                 </style>
             `;
@@ -394,6 +398,15 @@
                         <div class="close-btn" id="hide-panel">✕</div>
                     </div>
                     <div class="body">
+                        <div class="section">
+                            <div class="section-title">评论区导出</div>
+                            <div class="btn-row">
+                                <button class="btn btn-main" id="btn-export-watch">开始复制</button>
+                                <button class="btn btn-sub" id="btn-export-copy">复制结果</button>
+                            </div>
+                            <div class="export-hint" id="export-hint">点「开始复制」后，自己向下滑动评论区，脚本会实时收集（自动展开「全部 N 条回复」）；点「暂停」停止，可反复切换。</div>
+                        </div>
+
                         <div class="section">
                             <div class="section-title">分区过滤 (如: 盒友杂谈)</div>
                             <input type="text" id="kw-part-input" placeholder="输入分区全称回车...">
@@ -421,15 +434,6 @@
                             <input type="text" id="kw-comment-input" placeholder="输入评论屏蔽词回车...">
                             <div class="tag-cloud" id="kw-comment-list">${getTagsHTML(Config.data.commentKeywords, 'comment')}</div>
                             <div class="row" style="margin-top:8px"><span>屏蔽纯表情/空评论</span> <label class="switch"><input type="checkbox" id="chk-pure-emoji" ${Config.data.blockPureEmoji ? 'checked' : ''}><span class="slider"></span></label></div>
-                        </div>
-
-                        <div class="section">
-                            <div class="section-title">评论区导出</div>
-                            <div class="btn-row">
-                                <button class="btn btn-main" id="btn-export-run">采集并复制</button>
-                                <button class="btn btn-sub" id="btn-export-copy">直接复制</button>
-                            </div>
-                            <div class="export-hint" id="export-hint">「采集并复制」会自动展开「全部 N 条回复」并向下滚动加载，完成后再复制为 Markdown。</div>
                         </div>
 
                         <div class="stats">
@@ -495,29 +499,28 @@
                 Engine.refreshAll();
             };
 
-            // ---- 评论区导出 ----
+            // ---- 评论区导出（手动模式：你自己滑动，脚本跟着收集） ----
             root.getElementById('btn-export-copy').onclick = () => this.copyExport();
 
-            root.getElementById('btn-export-run').onclick = async () => {
+            root.getElementById('btn-export-watch').onclick = () => {
                 const hint = root.getElementById('export-hint');
-                const btn = root.getElementById('btn-export-run');
+                const btn = root.getElementById('btn-export-watch');
+                const onCount = (n) => {
+                    hint.innerText = `实时收集中 · 已收集 ${n} 条根评论（继续向下滑动）`;
+                };
 
-                if (CommentExport.running) {
-                    CommentExport.stop();
-                    btn.innerText = '采集并复制';
-                    hint.innerText = '已停止采集，可点「直接复制」拿走当前结果。';
+                if (CommentExport.watching) {
+                    const n = CommentExport.stopWatch();
+                    btn.innerText = '开始复制';
+                    btn.classList.remove('is-on');
+                    hint.innerText = `已暂停，共收集 ${n} 条根评论。点「复制结果」拿走，或再点「开始复制」继续。`;
                     return;
                 }
 
-                btn.innerText = '采集中…（点击停止）';
-                hint.innerText = '正在展开「全部 N 条回复」并向下滚动…';
-
-                await CommentExport.run((n, round) => {
-                    hint.innerText = `第 ${round} 轮 · 已采集 ${n} 条根评论`;
-                });
-
-                btn.innerText = '采集并复制';
-                this.copyExport();
+                CommentExport.startWatch(onCount);
+                btn.innerText = '暂停';
+                btn.classList.add('is-on');
+                hint.innerText = '已开始实时收集，请自己向下滑动评论区。';
             };
         },
 
@@ -525,7 +528,7 @@
         copyExport() {
             const hint = this.shadowRoot.getElementById('export-hint');
             if (!CommentExport.store.size) {
-                if (hint) hint.innerText = '还没抓到评论：先滚动到评论区，或点「采集并复制」。';
+                if (hint) hint.innerText = '还没抓到评论：先滚动到评论区，或点「开始复制」。';
                 return;
             }
             const sub = [...CommentExport.store.values()].reduce((n, c) => n + c.children.length, 0);
