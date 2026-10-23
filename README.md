@@ -13,6 +13,7 @@
 |---|---|---|---|
 | [小黑盒弹窗自动关闭](scripts/heybox-popup-dismiss.user.js) | 自动点掉小黑盒的“取消”弹窗 | xiaoheihe.cn | 1.0.2 |
 | [小黑盒内容净化器](scripts/heybox-content-purifier.user.js) | 帖子与评论区的关键词 / 分区 / 零互动过滤 | xiaoheihe.cn | 4.1.2 |
+| [小黑盒收藏夹整理器](scripts/heybox-favour-organizer.user.js) | 批量抓取收藏帖正文与评论，每条存一个 MD 并打包成 ZIP | xiaoheihe.cn | 1.0.0 |
 | [Linux.do 内容过滤器](scripts/linuxdo-content-filter.user.js) | 关键词过滤标签、标题、正文与评论 | linux.do | 1.0.1 |
 | [Reddit 内容屏蔽器](scripts/reddit-content-blocker.user.js) | 按关键词、用户名屏蔽帖子与评论 | reddit.com | 1.0.2 |
 | [V2EX 关键词屏蔽器](scripts/v2ex-keyword-blocker.user.js) | 三组关键词隐藏帖子与评论 | v2ex.com | 1.0.1 |
