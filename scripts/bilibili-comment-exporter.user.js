@@ -2,7 +2,7 @@
 // @name         B站评论批量导出
 // @name:en      Bilibili Comment Exporter
 // @namespace    https://www.bilibili.com/
-// @version      1.0.2
+// @version      1.0.3
 // @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
 // @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
 // @description:en One-click export of Bilibili comments (video/dynamic/bangumi) with Shadow DOM piercing, Markdown/JSON/CSV output, auto-scroll collection and nested reply support.
@@ -16,10 +16,7 @@
 // @match        https://*.bilibili.com/opus/*
 // @match        https://*.bilibili.com/read/*
 // @grant        GM_setClipboard
-// @grant        GM_getValue
-// @grant        GM_setValue
 // @grant        GM_registerMenuCommand
-// @grant        GM_notification
 // @license      MIT
 // ==/UserScript==
 
@@ -62,7 +59,7 @@
      * ============================================================ */
 
     const TAG = '[B站评论导出]';
-    const VERSION = '1.0.2';
+    const VERSION = '1.0.3';
 
     /* ============================================================
      * 1. 通用工具
@@ -548,7 +545,7 @@
      * ============================================================ */
     const PANEL_ID = 'xxs-bili-panel-host';
     let panel = null;   // { host, shadow, root, dot, capsule, panelEl, ... }
-    let collapsed = GM_getValue('panelCollapsed', false);
+    let collapsed = true;   // 页一打开就收起，只留圆点（不读存储，否则刷新后又弹出来）
 
     const CSS = `
         :host { all: initial; }
@@ -657,7 +654,6 @@
         dot.addEventListener('click', () => {
             if (State.running) { toggleRun(); return; }
             collapsed = !collapsed;
-            GM_setValue('panelCollapsed', collapsed);
             applyCollapsed();
         });
 
@@ -712,7 +708,6 @@
 
     function expandPanel() {
         collapsed = false;
-        GM_setValue('panelCollapsed', false);
         applyCollapsed();
     }
 
@@ -774,7 +769,6 @@
         State.running = true;
         State.paused = false;
         collapsed = true;
-        GM_setValue('panelCollapsed', true);
         applyCollapsed();
         toast('开始采集');
 
@@ -813,7 +807,6 @@
         switch (act) {
             case 'collapse':
                 collapsed = true;
-                GM_setValue('panelCollapsed', true);
                 applyCollapsed();
                 break;
             case 'scan':
@@ -928,7 +921,6 @@
         if (e.altKey && (e.key === 'x' || e.key === 'X')) {
             e.preventDefault();
             collapsed = !collapsed;
-            GM_setValue('panelCollapsed', collapsed);
             applyCollapsed();
         }
     }, true);
