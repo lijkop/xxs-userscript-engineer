@@ -1,6 +1,6 @@
 # B站评论批量导出
 
-> 版本：1.0.1 · 作者：小小薯（XXS） · 反馈：[Telegram 频道](https://t.me/zzyyffxx)
+> 版本：1.0.2 · 作者：小小薯（XXS） · 反馈：[Telegram 频道](https://t.me/zzyyffxx)
 
 ## 简介
 
@@ -48,6 +48,10 @@ B 站评论区是 Lit Web Components，评论内容全部在 Shadow DOM 里，`d
 
 ## 更新日志
 
+### 1.0.2
+
+- 标题下的一行描述只保留功能说明，反馈渠道不再挤在里面，统一放到本页「反馈」区块
+
 ### 1.0.1
 
 - 按真实运行时 DOM 核对全部选择器，去掉 1.0.0 的推定路径
@@ -65,44 +69,3 @@ B 站评论区是 Lit Web Components，评论内容全部在 Shadow DOM 里，`d
 ## 反馈
 
 反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
-
----
-
-## 开发备注（内部，勿同步到 Greasy Fork）
-
-**结构证据：2026-10-25 用户提供的真实运行时 DOM，逐层核对。**
-
-```
-bili-comments
-  #shadow-root
-    #contents
-      #feed
-        bili-comment-thread-renderer            ← 一层楼
-          #shadow-root
-            <bili-comment-renderer id="comment">            主楼
-            #replies > bili-comment-replies-renderer
-              #shadow-root
-                #expander-contents
-                  bili-comment-reply-renderer × N            楼中楼（默认 2 条）
-                  #expander-footer #view-more bili-text-button   「共 N 条回复，点击查看」
-```
-
-取值路径（已核对，非推定）：
-
-| 字段 | 路径 |
-|---|---|
-| 用户名 | `bili-comment-user-info`.shadowRoot → `#info #user-name a` |
-| 主页 | 同上 `a[href]`（`//space.bilibili.com/<mid>`） |
-| UP主 | 同上 `a` 的 inline `color:#FB7299` |
-| 正文 | `bili-rich-text`.shadowRoot → `p#contents` |
-| 时间 | `bili-comment-action-buttons-renderer`.shadowRoot → `#pubdate` |
-| IP属地 | 同上 `#ip`（文本为 `IP属地：广西`） |
-| 点赞 | 同上 `#like #count` |
-| 楼中楼容器 | `bili-comment-replies-renderer`.shadowRoot → `bili-comment-reply-renderer` |
-
-两个反直觉的点（1.0.0 都踩了）：
-
-1. **楼中楼没有 `bili-comment-renderer` 包裹层**，直接是 `reply-renderer > #body > #main > user-info + rich-text`。
-2. **时间和点赞数不在评论容器的 shadowRoot 里**，而在它内部的 `bili-comment-action-buttons-renderer` 的 shadowRoot 里，多下探一层。
-
-尚未验证：翻页方式（滚到底自动加载 vs 分页按钮）、置顶标记的实际节点。这两项不影响正确性，翻页靠用户手动操作后重复点「抓取」也能累积。

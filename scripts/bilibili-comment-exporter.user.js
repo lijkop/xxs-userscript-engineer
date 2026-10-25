@@ -2,10 +2,10 @@
 // @name         B站评论批量导出
 // @name:en      Bilibili Comment Exporter
 // @namespace    https://www.bilibili.com/
-// @version      1.0.1
-// @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
-// @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。反馈问题请加入 Telegram 频道：https://t.me/zzyyffxx，通过这里联系我，修 Bug 更快。
-// @description:en One-click export of Bilibili comments (video/dynamic/bangumi) with Shadow DOM piercing, Markdown/JSON/CSV output, auto-scroll collection and nested reply support. Feedback via Telegram: https://t.me/zzyyffxx
+// @version      1.0.2
+// @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
+// @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
+// @description:en One-click export of Bilibili comments (video/dynamic/bangumi) with Shadow DOM piercing, Markdown/JSON/CSV output, auto-scroll collection and nested reply support.
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
 // @supportURL   https://github.com/lijkop/xxs-userscript-engineer/issues
@@ -62,7 +62,7 @@
      * ============================================================ */
 
     const TAG = '[B站评论导出]';
-    const VERSION = '1.0.1';
+    const VERSION = '1.0.2';
 
     /* ============================================================
      * 1. 通用工具
