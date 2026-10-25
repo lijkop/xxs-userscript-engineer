@@ -2,9 +2,9 @@
 // @name         B站评论批量导出
 // @name:en      Bilibili Comment Exporter
 // @namespace    https://www.bilibili.com/
-// @version      1.1.0
-// @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
-// @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
+// @version      1.2.0
+// @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持持续抓取、楼中楼层级、展开楼中楼。
+// @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持持续抓取、楼中楼层级、展开楼中楼。
 // @description:en One-click export of Bilibili comments (video/dynamic/bangumi) with Shadow DOM piercing, Markdown/JSON/CSV output, auto-scroll collection and nested reply support.
 // @author       小小薯 (XXS)
 // @homepage     https://github.com/lijkop/xxs-userscript-engineer
@@ -59,7 +59,7 @@
      * ============================================================ */
 
     const TAG = '[B站评论导出]';
-    const VERSION = '1.1.0';
+    const VERSION = '1.2.0';
 
     /* ============================================================
      * 1. 通用工具
@@ -166,8 +166,6 @@
         list: [],          // 扁平评论数组
         seen: new Set(),   // 去重键
         running: false,
-        paused: false,
-        autoScroll: true,
         scanning: false,
         lastUrl: location.href
     };
@@ -626,7 +624,6 @@
                 <div class="row">
                     <button class="act primary" data-act="auto">开始抓取</button>
                 </div>
-                <label class="check"><input type="checkbox" data-act="autoScroll" checked>自动滚动（关掉=你手动翻页，脚本持续收集）</label>
                 <div class="row">
                     <button class="act" data-act="md">导出 MD</button>
                     <button class="act" data-act="copy">复制</button>
@@ -639,7 +636,7 @@
                     <button class="act" data-act="dump">结构快照</button>
                     <button class="act danger" data-act="clear">清空</button>
                 </div>
-                <div class="hint">点一次「开始抓取」就会一直跑到底，再点一次是暂停，不用反复点。翻页/滚动都会自动去重累积。Esc 暂停 / Alt+X 唤出。</div>
+                <div class="hint">点「开始抓取」后脚本只管收，页面你自己往下滑；滑到哪它收哪，重复的自动去掉。滑完点「停止抓取」，然后导出。Esc 也能停 / Alt+X 唤出。</div>
             </div>
         `;
 
@@ -662,20 +659,16 @@
             handleAction(btn.dataset.act, btn);
         });
 
-        shadow.querySelector('[data-act="autoScroll"]').addEventListener('change', (e) => {
-            State.autoScroll = e.target.checked;
-            toast(State.autoScroll ? '已切换为自动滚动' : '已切换为手动模式');
-        });
 
         makeDraggable(panelEl, shadow.querySelector('.head'));
     }
 
-    /** 主按钮文案跟随运行状态：开始抓取 ↔ 暂停抓取 */
+    /** 主按钮文案跟随运行状态：开始抓取 ↔ 停止抓取 */
     function syncRunButton() {
         if (!panel) return;
         const btn = panel.shadow.querySelector('[data-act="auto"]');
         if (!btn) return;
-        btn.textContent = State.running ? '暂停抓取' : '开始抓取';
+        btn.textContent = State.running ? '停止抓取' : '开始抓取';
         btn.classList.toggle('danger', State.running);
     }
 
@@ -766,9 +759,8 @@
     async function toggleRun() {
         if (State.running) {
             State.running = false;
-            State.paused = true;
-            toast(`已暂停，共 ${State.list.length} 条`);
-            expandPanel();          // 暂停后自动展开，方便立刻导出
+            toast(`已停止，共 ${State.list.length} 条`);
+            expandPanel();          // 停止后自动展开，方便立刻导出
             return;
         }
         if (!findCommentsHost()) {
@@ -776,41 +768,18 @@
             return;
         }
         State.running = true;
-        State.paused = false;
         collapsed = true;
         applyCollapsed();
-        toast('开始采集');
+        toast('开始抓取，你自己往下滑，滑完点停止');
 
-        let idle = 0;
-        let lastCount = State.list.length;
-
+        // 脚本不滚动页面，滚动完全由用户手动完成。
+        // 这里只做一件事：把当前已渲染的评论持续收进来（含楼中楼展开），
+        // 直到用户点「停止抓取」/ Esc —— 永不自行结束。
         while (State.running) {
-            const r = await doScan(false);
+            await doScan(false);
             updateStats();
             applyCollapsed();
-
-            if (r.added > 0) { idle = 0; lastCount = r.total; } else { idle++; }
-
-            // 自动滚动：连续 5 轮无新增才认为到底
-            // 手动模式（关掉自动滚动）：永不自动停，只由用户点暂停 / Esc 结束
-            if (State.autoScroll && idle >= 5) {
-                State.running = false;
-                toast(`到底了，共 ${State.list.length} 条`);
-                expandPanel();
-                break;
-            }
-
-            if (State.autoScroll) {
-                const threads = getThreads(findCommentsHost());
-                const last = threads[threads.length - 1];
-                if (last) last.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                else window.scrollBy(0, 600);
-                // ±25% 随机抖动，避免固定节奏
-                await sleep(Math.round(1100 * (0.75 + Math.random() * 0.5)));
-            } else {
-                // 手动模式：不滚动，持续轮询收集
-                await sleep(700);
-            }
+            await sleep(750);       // 约每秒一轮，够跟手，也不会把页面卡住
         }
     }
 
@@ -920,8 +889,7 @@
         if (e.key === 'Escape' && State.running) {
             e.stopPropagation();
             State.running = false;
-            State.paused = true;
-            toast(`已暂停，共 ${State.list.length} 条`);
+            toast(`已停止，共 ${State.list.length} 条`);
             expandPanel();
         }
         if (e.altKey && (e.key === 'x' || e.key === 'X')) {
