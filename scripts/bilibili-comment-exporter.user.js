@@ -2,7 +2,7 @@
 // @name         B站评论批量导出
 // @name:en      Bilibili Comment Exporter
 // @namespace    https://www.bilibili.com/
-// @version      1.0.3
+// @version      1.1.0
 // @description  一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
 // @description:zh-CN 一键抓取B站视频/动态/番剧评论区，穿透 Lit Web Components 的 Shadow DOM，导出为 Markdown / JSON / CSV，支持自动滚动采集、楼中楼层级、暂停续抓。
 // @description:en One-click export of Bilibili comments (video/dynamic/bangumi) with Shadow DOM piercing, Markdown/JSON/CSV output, auto-scroll collection and nested reply support.
@@ -59,7 +59,7 @@
      * ============================================================ */
 
     const TAG = '[B站评论导出]';
-    const VERSION = '1.0.3';
+    const VERSION = '1.1.0';
 
     /* ============================================================
      * 1. 通用工具
@@ -624,10 +624,9 @@
                     <span>页面 <b data-stat="threads">0</b> 楼</span>
                 </div>
                 <div class="row">
-                    <button class="act primary" data-act="scan">抓取当前评论</button>
-                    <button class="act" data-act="auto">自动滚动</button>
+                    <button class="act primary" data-act="auto">开始抓取</button>
                 </div>
-                <label class="check"><input type="checkbox" data-act="autoScroll" checked>自动滚动（关掉=手动翻页后点抓取）</label>
+                <label class="check"><input type="checkbox" data-act="autoScroll" checked>自动滚动（关掉=你手动翻页，脚本持续收集）</label>
                 <div class="row">
                     <button class="act" data-act="md">导出 MD</button>
                     <button class="act" data-act="copy">复制</button>
@@ -640,7 +639,7 @@
                     <button class="act" data-act="dump">结构快照</button>
                     <button class="act danger" data-act="clear">清空</button>
                 </div>
-                <div class="hint">B站评论在 Shadow DOM 里，脚本已穿透读取。翻页后再次点「抓取」会自动去重累积。Esc 暂停 / Alt+X 唤出。</div>
+                <div class="hint">点一次「开始抓取」就会一直跑到底，再点一次是暂停，不用反复点。翻页/滚动都会自动去重累积。Esc 暂停 / Alt+X 唤出。</div>
             </div>
         `;
 
@@ -671,8 +670,18 @@
         makeDraggable(panelEl, shadow.querySelector('.head'));
     }
 
+    /** 主按钮文案跟随运行状态：开始抓取 ↔ 暂停抓取 */
+    function syncRunButton() {
+        if (!panel) return;
+        const btn = panel.shadow.querySelector('[data-act="auto"]');
+        if (!btn) return;
+        btn.textContent = State.running ? '暂停抓取' : '开始抓取';
+        btn.classList.toggle('danger', State.running);
+    }
+
     function applyCollapsed() {
         if (!panel) return;
+        syncRunButton();
         const { dot, panelEl } = panel;
         if (State.running) {
             dot.hidden = false;
@@ -782,7 +791,9 @@
 
             if (r.added > 0) { idle = 0; lastCount = r.total; } else { idle++; }
 
-            if (idle >= 4) {
+            // 自动滚动：连续 5 轮无新增才认为到底
+            // 手动模式（关掉自动滚动）：永不自动停，只由用户点暂停 / Esc 结束
+            if (State.autoScroll && idle >= 5) {
                 State.running = false;
                 toast(`到底了，共 ${State.list.length} 条`);
                 expandPanel();
@@ -808,11 +819,6 @@
             case 'collapse':
                 collapsed = true;
                 applyCollapsed();
-                break;
-            case 'scan':
-                if (findCommentsHost()) btn.textContent = '抓取中…';
-                await doScan(true);
-                btn.textContent = '抓取当前评论';
                 break;
             case 'auto':
                 toggleRun();
