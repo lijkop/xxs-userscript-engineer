@@ -17,6 +17,7 @@
 | [Linux.do 内容过滤器](scripts/linuxdo-content-filter.user.js) | 关键词过滤标签、标题、正文与评论 | linux.do | 1.0.1 |
 | [Reddit 内容屏蔽器](scripts/reddit-content-blocker.user.js) | 按关键词、用户名屏蔽帖子与评论 | reddit.com | 1.0.2 |
 | [V2EX 关键词屏蔽器](scripts/v2ex-keyword-blocker.user.js) | 三组关键词隐藏帖子与评论 | v2ex.com | 1.0.1 |
+| [论坛回复水帖过滤器](scripts/forum-reply-waterpost-filter.user.js) | Linux.do 与 V2EX 共用回复关键词，命中时隐藏回复 | linux.do、v2ex.com | 1.0.0 |
 | [X (Twitter) 内容屏蔽器](scripts/twitter-content-blocker.user.js) | 关键词 / 用户名 / 零互动屏蔽推文与回复 | x.com、twitter.com | 2.1.2 |
 | [Xtract（X 内容采集）](scripts/xtract.user.js) | 抓主页帖子 / 转帖用户 / 引用推文，可复制正文+评论并导出 | x.com、twitter.com | 1.3.0 |
 | [微博内容屏蔽器](scripts/weibo-content-blocker.user.js) | 关键词屏蔽，支持超话与蓝 V 规则 | weibo.com | 3.4.1 |
