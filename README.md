@@ -14,10 +14,8 @@
 | [小黑盒弹窗自动关闭](scripts/heybox-popup-dismiss.user.js) | 自动点掉小黑盒的“取消”弹窗 | xiaoheihe.cn | 1.0.2 |
 | [小黑盒内容净化器](scripts/heybox-content-purifier.user.js) | 帖子与评论区的关键词 / 分区 / 零互动过滤 | xiaoheihe.cn | 4.1.2 |
 | [小黑盒收藏夹整理器](scripts/heybox-favour-organizer.user.js) | 批量抓取收藏帖正文与评论，每条存一个 MD 并打包成 ZIP | xiaoheihe.cn | 1.0.0 |
-| [Linux.do 内容过滤器](scripts/linuxdo-content-filter.user.js) | 关键词过滤标签、标题、正文与评论 | linux.do | 1.0.1 |
-| [Reddit 内容屏蔽器](scripts/reddit-content-blocker.user.js) | 按关键词、用户名屏蔽帖子与评论 | reddit.com | 1.0.2 |
+| [论坛内容过滤器](scripts/forum-content-filter.user.js) | 多论坛综合过滤器：Linux.do 多维过滤、Reddit 帖子/评论屏蔽、V2EX 回复水帖隐藏及三站共享回复水帖词 | linux.do、reddit.com、v2ex.com | 1.0.0 |
 | [V2EX 关键词屏蔽器](scripts/v2ex-keyword-blocker.user.js) | 三组关键词隐藏帖子与评论 | v2ex.com | 1.0.1 |
-| [论坛回复水帖过滤器](scripts/forum-reply-waterpost-filter.user.js) | Linux.do 与 V2EX 共用回复关键词，命中时隐藏回复 | linux.do、v2ex.com | 1.0.0 |
 | [X (Twitter) 内容屏蔽器](scripts/twitter-content-blocker.user.js) | 关键词 / 用户名 / 零互动屏蔽推文与回复 | x.com、twitter.com | 2.1.2 |
 | [Xtract（X 内容采集）](scripts/xtract.user.js) | 抓主页帖子 / 转帖用户 / 引用推文，可复制正文+评论并导出 | x.com、twitter.com | 1.3.0 |
 | [微博内容屏蔽器](scripts/weibo-content-blocker.user.js) | 关键词屏蔽，支持超话与蓝 V 规则 | weibo.com | 3.4.1 |
